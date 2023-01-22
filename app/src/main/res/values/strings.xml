@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">NumberProject</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="input_number">Input number</string>
+    <string name="get_fact">Get fact</string>
+    <string name="get_random_fact">Get fact about random number</string>
 </resources>
