@@ -1,9 +1,17 @@
 package com.example.numberproject.data
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
+import kotlin.Number
+
+@Dao
+interface NumberDao {
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(number: Number)
+
+    @Query("SELECT number, fact from number ORDER BY id DESC")
+    fun getNumbers()
+}
 
 @Database(entities = [Number::class], version = 1, exportSchema = false)
 abstract class NumberDatabase : RoomDatabase() {
