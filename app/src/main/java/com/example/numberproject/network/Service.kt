@@ -1,8 +1,7 @@
 package com.example.numberproject.network
 
-import com.squareup.moshi.Moshi
+import retrofit2.Call
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -11,10 +10,10 @@ private const val BASE_URL = "http://numbersapi.com"
 
 interface NumberApiService {
     @GET("{number}")
-    suspend fun getFact(@Path("number") number: Double): String
+    suspend fun getFact(@Path("number") number: Double): Call<String>
 
     @GET("random/math")
-    suspend fun getRandomFact() : String
+    suspend fun getRandomFact() : Call<String>
 }
 /**
  * A public Api object that exposes the lazy-initialized Retrofit service

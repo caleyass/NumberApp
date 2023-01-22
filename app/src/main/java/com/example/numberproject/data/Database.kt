@@ -2,7 +2,7 @@ package com.example.numberproject.data
 
 import android.content.Context
 import androidx.room.*
-import kotlin.Number
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NumberDao {
@@ -10,7 +10,7 @@ interface NumberDao {
     suspend fun insert(number: Number)
 
     @Query("SELECT number, fact from number ORDER BY id DESC")
-    fun getNumbers()
+    fun getNumbers() : Flow<List<Number>>
 }
 
 @Database(entities = [Number::class], version = 1, exportSchema = false)
