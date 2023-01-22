@@ -7,6 +7,7 @@ interface NumberDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(number: Number)
 
-    /*@Query()
-    fun getNumbers()*/
+    @Query("SELECT number, fact from number ORDER BY id DESC")
+    fun getNumbers()
+
 }
