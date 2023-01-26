@@ -1,5 +1,8 @@
 package com.example.numberproject
 
+import android.util.Log
+import com.example.numberproject.ui.NumberFactFragment
+import com.example.numberproject.viewmodel.NumbersViewModel
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -10,8 +13,12 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+
+    /*val viewModel = NumbersViewModel()
+
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
+    fun testGettingFacts(){
+        val tag = "TEST"
+        Log.i(tag, )
+    }*/
 }

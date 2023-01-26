@@ -10,10 +10,10 @@ private const val BASE_URL = "http://numbersapi.com"
 
 interface NumberApiService {
     @GET("{number}")
-    suspend fun getFact(@Path("number") number: Double): Call<String>
+    fun getFact(@Path("number") number: Int): Call<String>
 
     @GET("random/math")
-    suspend fun getRandomFact() : Call<String>
+    fun getRandomFact() : Call<String>
 }
 /**
  * A public Api object that exposes the lazy-initialized Retrofit service

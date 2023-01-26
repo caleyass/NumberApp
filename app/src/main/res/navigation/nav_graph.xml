@@ -15,5 +15,9 @@
     <fragment
         android:id="@+id/numberFactFragment"
         android:name="com.example.numberproject.ui.NumberFactFragment"
-        android:label="NumberFactFragment" />
+        android:label="NumberFactFragment" >
+        <argument
+            android:name="number"
+            app:argType="integer" />
+    </fragment>
 </navigation>

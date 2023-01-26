@@ -1,6 +1,7 @@
 package com.example.numberproject.data
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
@@ -9,7 +10,7 @@ interface NumberDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(number: Number)
 
-    @Query("SELECT number, fact from number ORDER BY id DESC")
+    @Query("SELECT id, number, fact from number ORDER BY id DESC")
     fun getNumbers() : Flow<List<Number>>
 }
 

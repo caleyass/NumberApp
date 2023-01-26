@@ -1,56 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="15dp">
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textField"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/input_number"
-        app:counterEnabled="true"
-        app:counterMaxLength="20"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="15dp">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/enteredNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:hint="@string/input_number"
+            app:counterEnabled="true"
+            app:counterMaxLength="20"
+            >
 
-            />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
 
-    </com.google.android.material.textfield.TextInputLayout>
+                />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:text="@string/get_fact"
-        android:enabled="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/space_dim" />
+        <Button
+            android:id="@+id/btn_get_fact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:text="@string/get_fact"
+            android:enabled="true"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:text="@string/get_random_fact"
-        android:enabled="true"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_dim" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/space_dim" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:text="@string/get_random_fact"
+            android:enabled="true"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_dim" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</layout>
