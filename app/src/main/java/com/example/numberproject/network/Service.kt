@@ -5,12 +5,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
+import java.math.BigInteger
 
 private const val BASE_URL = "http://numbersapi.com"
 
 interface NumberApiService {
     @GET("{number}")
-    fun getFact(@Path("number") number: Int): Call<String>
+    fun getFact(@Path("number") number: BigInteger): Call<String>
 
     @GET("random/math")
     fun getRandomFact() : Call<String>

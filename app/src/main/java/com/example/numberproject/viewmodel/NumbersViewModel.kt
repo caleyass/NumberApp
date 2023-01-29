@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Response
 import java.lang.IllegalArgumentException
+import java.math.BigInteger
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -23,15 +24,15 @@ class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
 
     val allNumbers : LiveData<List<Number>> = numberDao.getNumbers().asLiveData()
 
-    fun addNumber(number : Int, fact:String){
-        insertNumber(Number(number = number, fact = fact))
+    fun addNumber(number: Number){
+        insertNumber( number)
     }
 
     /**
      * @param number entered number
      * Get fact about number
      * */
-    fun getFact(number : Int?) : String
+    fun getFact(number : BigInteger?) : String
     {
         val exec : ExecutorService = Executors.newSingleThreadExecutor()
         exec.execute{
@@ -42,7 +43,7 @@ class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
         }
         exec.shutdown()
         exec.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS)
-        return fact!!
+        return fact
     }
 
     private fun insertNumber(number: Number){

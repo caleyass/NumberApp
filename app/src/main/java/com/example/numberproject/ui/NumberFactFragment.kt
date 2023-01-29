@@ -13,6 +13,7 @@ import com.example.numberproject.databinding.FragmentNumberFactBinding
 import com.example.numberproject.databinding.FragmentStarterBinding
 import com.example.numberproject.viewmodel.NumbersViewModel
 import com.example.numberproject.viewmodel.NumbersViewModelFactory
+import java.math.BigInteger
 
 class NumberFactFragment : Fragment() {
 
@@ -47,11 +48,12 @@ class NumberFactFragment : Fragment() {
     }
 
     private fun createNumber(){
-        var num : Int? = navigationArgs.number?.toInt()
+        var num : BigInteger? = navigationArgs.number?.toBigInteger()
         val fact = viewModel.getFact(num)
         if(num == null)
-            num = fact.split(" ")[0].toInt()
+            num = fact.split(" ")[0].toBigInteger()
         number = Number(0, number = num, fact = fact)
+        viewModel.addNumber(number)
     }
 
     /**

@@ -15,6 +15,7 @@ interface NumberDao {
 }
 
 @Database(entities = [Number::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class NumberDatabase : RoomDatabase() {
     abstract fun numberDao() : NumberDao
 
