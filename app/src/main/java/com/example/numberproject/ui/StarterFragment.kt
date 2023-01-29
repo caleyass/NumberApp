@@ -9,8 +9,10 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.numberproject.NumberApplication
 import com.example.numberproject.R
+import com.example.numberproject.adapter.NumberListAdapter
 import com.example.numberproject.data.Number
 import com.example.numberproject.databinding.FragmentStarterBinding
 import com.example.numberproject.viewmodel.NumbersViewModel
@@ -18,8 +20,6 @@ import com.example.numberproject.viewmodel.NumbersViewModelFactory
 
 
 class StarterFragment : Fragment(R.layout.fragment_starter) {
-
-    private val navigationArgs : NumberFactFragmentArgs by navArgs()
 
     private var _binding: FragmentStarterBinding? = null
     private val binding get() = _binding!!
@@ -31,6 +31,9 @@ class StarterFragment : Fragment(R.layout.fragment_starter) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        /*if(savedInstanceState != null)
+            binding?.enteredNumber?.editText?.setText(savedInstanceState?.getString("enteredTest"))
+*/
     }
 
     override fun onCreateView(
@@ -44,8 +47,36 @@ class StarterFragment : Fragment(R.layout.fragment_starter) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setFactButton()
+        binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
+        val adapter = NumberListAdapter()
+        binding.recyclerView.adapter = adapter
+        viewModel.allNumbers.observe(this.viewLifecycleOwner){ numbers ->
+            numbers.let{
+                adapter.submitList(it)
+            }
+        }
+        setButtons()
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    /*override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("enteredTest", binding.enteredNumber.toString())
+    }*/
+
+    private fun setButtons(){
+        setRandomFactButton()
+        setFactButton()
+    }
+
+    /**
+     * Sets click listener for GET RANDOM FACT button of entered number
+     * */
+    private fun setRandomFactButton() {
+        binding.btnGetRandomFact.setOnClickListener {
+            val action = StarterFragmentDirections.actionStarterFragmentToNumberFactFragment(null)
+            findNavController().navigate(action)
+        }
     }
 
     /**
@@ -56,9 +87,8 @@ class StarterFragment : Fragment(R.layout.fragment_starter) {
             //gets entered number
             val enteredText : String = binding.enteredNumber.editText?.text.toString()
             if(numberIsEntered(enteredText)) {
-                val enteredNumber = enteredText.toInt()
-                //submitNumber(enteredNumber)
-                val action = StarterFragmentDirections.actionStarterFragmentToNumberFactFragment(enteredNumber)
+//                val enteredNumber = enteredText.toInt()
+                val action = StarterFragmentDirections.actionStarterFragmentToNumberFactFragment(enteredText)
                 findNavController().navigate(action)
             }
         }

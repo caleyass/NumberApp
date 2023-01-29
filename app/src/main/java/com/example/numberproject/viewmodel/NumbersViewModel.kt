@@ -15,9 +15,11 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
+
     /*private var _number = MutableLiveData<Number>()
     val number : LiveData<Number>
         get() = _number*/
+    lateinit var fact:String
 
     val allNumbers : LiveData<List<Number>> = numberDao.getNumbers().asLiveData()
 
@@ -29,16 +31,18 @@ class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
      * @param number entered number
      * Get fact about number
      * */
-    fun getFact(number : Int) : String?
+    fun getFact(number : Int?) : String
     {
         val exec : ExecutorService = Executors.newSingleThreadExecutor()
-        var num: String? = null
-        exec.execute {
-            num = NumberApi.retrofitService.getFact(number).execute().body().toString()
+        exec.execute{
+            fact = if(number!=null)
+                NumberApi.retrofitService.getFact(number).execute().body()!!
+            else
+                NumberApi.retrofitService.getRandomFact().execute().body()!!
         }
         exec.shutdown()
         exec.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS)
-        return num
+        return fact!!
     }
 
     private fun insertNumber(number: Number){

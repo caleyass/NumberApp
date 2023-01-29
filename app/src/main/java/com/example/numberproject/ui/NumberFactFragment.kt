@@ -42,10 +42,16 @@ class NumberFactFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val num = navigationArgs.number
-        val fact = viewModel.getFact(num)
-        number = Number(0, number = num, fact = fact)
+        createNumber()
         bind(number)
+    }
+
+    private fun createNumber(){
+        var num : Int? = navigationArgs.number?.toInt()
+        val fact = viewModel.getFact(num)
+        if(num == null)
+            num = fact.split(" ")[0].toInt()
+        number = Number(0, number = num, fact = fact)
     }
 
     /**

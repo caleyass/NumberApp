@@ -18,6 +18,7 @@
         android:label="NumberFactFragment" >
         <argument
             android:name="number"
-            app:argType="integer" />
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>
