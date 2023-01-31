@@ -20,32 +20,54 @@ class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
     /*private var _number = MutableLiveData<Number>()
     val number : LiveData<Number>
         get() = _number*/
-    lateinit var fact:String
+
 
     val allNumbers : LiveData<List<Number>> = numberDao.getNumbers().asLiveData()
 
+
+    /**
+     * @param number entered number
+     * @return fact about entered number
+     * Get fact about number
+     * */
+    fun getFact(number : BigInteger?) : String
+    {
+        var fact:String = ""
+        val exec : ExecutorService = Executors.newSingleThreadExecutor() // create new thread to not run in main thread
+        exec.execute{
+            fact = if(number!=null) // number is not null in case user wants to get the fact about specific entered number
+                NumberApi.retrofitService.getFact(number).execute().body()!!
+            else // number is null in case user wants to get the fact about random number
+                NumberApi.retrofitService.getRandomFact().execute().body()!!
+        }
+        exec.shutdown() // wait until code is executed because fact may be null
+        exec.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS)
+        return fact
+    }
+    /**
+     * @param num BigInteger number
+     * @return Number object with entered number and fact about it
+     * */
+    fun createNumber(num : BigInteger?) : Number{
+        val fact = getFact(num) // get fact according to entered number
+        if(num == null) // in case user wanted to get random number
+            // 1st word of the fact contains number that is returned
+             return Number(0,number = fact.split(" ")[0].toBigInteger(), fact = fact)
+        return Number(0, number = num, fact = fact) // in case user wanted to get random number
+    }
+
+    /**
+     * @param number
+     * inserts number into database
+     * */
     fun addNumber(number: Number){
         insertNumber( number)
     }
 
     /**
-     * @param number entered number
-     * Get fact about number
+     * @param number
+     * inserts number into database
      * */
-    fun getFact(number : BigInteger?) : String
-    {
-        val exec : ExecutorService = Executors.newSingleThreadExecutor()
-        exec.execute{
-            fact = if(number!=null)
-                NumberApi.retrofitService.getFact(number).execute().body()!!
-            else
-                NumberApi.retrofitService.getRandomFact().execute().body()!!
-        }
-        exec.shutdown()
-        exec.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS)
-        return fact
-    }
-
     private fun insertNumber(number: Number){
         viewModelScope.launch {
             numberDao.insert(number)

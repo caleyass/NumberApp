@@ -44,17 +44,23 @@ class NumberFactFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         createNumber()
+        insertNumber()
         bind(number)
     }
 
+    /**
+     * Creates Number object according to entered number
+     * */
     private fun createNumber(){
-        var num : BigInteger? = navigationArgs.number?.toBigInteger()
-        val fact = viewModel.getFact(num)
-        if(num == null)
-            num = fact.split(" ")[0].toBigInteger()
-        number = Number(0, number = num, fact = fact)
-        viewModel.addNumber(number)
+        var num : BigInteger? = navigationArgs.number?.toBigInteger() // num that was entered
+        number = viewModel.createNumber(num) // create Number object according to entered number
     }
+
+    /**
+     * Inserts Number object into database
+     * */
+    private fun insertNumber() = viewModel.addNumber(number)
+
 
     /**
      * @param number number that was entered in StarterFragment

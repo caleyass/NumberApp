@@ -64,6 +64,9 @@ class StarterFragment : Fragment(R.layout.fragment_starter) {
         outState.putString("enteredTest", binding.enteredNumber.toString())
     }*/
 
+    /**
+     * Sets GET RANDOM FACT and GET FACT buttons
+     * */
     private fun setButtons(){
         setRandomFactButton()
         setFactButton()
@@ -87,14 +90,15 @@ class StarterFragment : Fragment(R.layout.fragment_starter) {
             //gets entered number
             val enteredText : String = binding.enteredNumber.editText?.text.toString()
             if(numberIsEntered(enteredText)) {
-//                val enteredNumber = enteredText.toInt()
                 val action = StarterFragmentDirections.actionStarterFragmentToNumberFactFragment(enteredText)
                 findNavController().navigate(action)
             }
         }
     }
 
-    /**Checks whether user have entered the number*/
+    /**
+     * Checks whether user has entered the number
+     * */
     private fun numberIsEntered(enteredText: String): Boolean {
         if(enteredText.isEmpty())
             Toast.makeText(context, "Input number!", Toast.LENGTH_LONG).show()
