@@ -9,6 +9,6 @@ import kotlinx.coroutines.flow.Flow
 class GetAllNumbersUseCase(private val numberRepository: NumberRepository) {
 
     fun execute(): LiveData<List<Number>> {
-        return numberRepository.getNumbers()
+        return numberRepository.getNumbers().asLiveData()
     }
 }

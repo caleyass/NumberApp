@@ -8,6 +8,8 @@ import java.math.BigInteger
 class GetNumberFactUseCase(private val numberRepository: NumberRepository)  {
 
     fun execute (number: BigInteger?): Call<String> {
-        return numberRepository.getFact(number)
+        if(number != null)
+            return numberRepository.getFact(number)
+        return numberRepository.getRandomFact()
     }
 }

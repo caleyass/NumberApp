@@ -1,7 +1,5 @@
 package com.example.numberproject.data.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
 import com.example.numberproject.data.local.NumberDao
 import com.example.numberproject.data.local.entity.Number
 import com.example.numberproject.data.remote.NumberApiService
@@ -12,14 +10,16 @@ import java.math.BigInteger
 
 class NumberRepositoryImpl(private val api:NumberApiService, private val dao : NumberDao) :
     NumberRepository {
-    override fun getFact(number: BigInteger?): Call<String> {
-        if(number == null)
-            return api.getRandomFact()
+    override fun getFact(number: BigInteger): Call<String> {
         return api.getFact(number)
     }
 
-    override fun getNumbers(): LiveData<List<Number>> {
-        return dao.getNumbers().asLiveData()
+    override fun getRandomFact(): Call<String> {
+        return api.getRandomFact()
+    }
+
+    override fun getNumbers(): Flow<List<Number>> {
+        return dao.getNumbers()
     }
 
     override suspend fun insertNumber(number: Number) {
