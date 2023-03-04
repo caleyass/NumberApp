@@ -4,7 +4,7 @@ import com.example.numberproject.data.local.entity.Number
 import com.example.numberproject.domain.repositories.NumberRepository
 
 class InsertNumberUseCase(private val numberRepository: NumberRepository) {
-    suspend fun insert(number: Number){
+    suspend fun execute(number: Number){
         return numberRepository.insertNumber(number)
     }
 }

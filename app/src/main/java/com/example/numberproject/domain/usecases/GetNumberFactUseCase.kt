@@ -7,9 +7,9 @@ import java.math.BigInteger
 
 class GetNumberFactUseCase(private val numberRepository: NumberRepository)  {
 
-    fun execute (number: BigInteger?): Call<String> {
+    fun execute (number: BigInteger?): String {
         if(number != null)
-            return numberRepository.getFact(number)
-        return numberRepository.getRandomFact()
+            return numberRepository.getFact(number).execute().body()!!
+        return numberRepository.getRandomFact().execute().body()!!
     }
 }

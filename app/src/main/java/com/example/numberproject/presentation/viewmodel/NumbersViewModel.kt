@@ -4,6 +4,10 @@ import androidx.lifecycle.*
 import com.example.numberproject.data.local.entity.Number
 import com.example.numberproject.data.local.NumberDao
 import com.example.numberproject.data.remote.NumberApi
+import com.example.numberproject.data.repository.NumberRepositoryImpl
+import com.example.numberproject.domain.usecases.GetAllNumbersUseCase
+import com.example.numberproject.domain.usecases.GetNumberFactUseCase
+import com.example.numberproject.domain.usecases.InsertNumberUseCase
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 import java.math.BigInteger
@@ -13,8 +17,12 @@ import java.util.concurrent.TimeUnit
 
 class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
 
+    private val numberRepositoryImpl : NumberRepositoryImpl by lazy { NumberRepositoryImpl(NumberApi.retrofitService, numberDao) }
+    private val getNumberFactUseCase : GetNumberFactUseCase by lazy { GetNumberFactUseCase(numberRepositoryImpl)}
+    private val insertNumberUseCase : InsertNumberUseCase by lazy { InsertNumberUseCase(numberRepositoryImpl)}
+    private val getAllNumberUseCase : GetAllNumbersUseCase by lazy { GetAllNumbersUseCase(numberRepositoryImpl)}
 
-    val allNumbers : LiveData<List<Number>> = numberDao.getNumbers().asLiveData()
+    val allNumbers : LiveData<List<Number>> = getAllNumberUseCase.execute()
 
 
     /**
@@ -27,10 +35,7 @@ class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
         var fact:String = ""
         val exec : ExecutorService = Executors.newSingleThreadExecutor() // create new thread to not run in main thread
         exec.execute{
-            fact = if(number!=null) // number is not null in case user wants to get the fact about specific entered number
-                NumberApi.retrofitService.getFact(number).execute().body()!!
-            else // number is null in case user wants to get the fact about random number
-                NumberApi.retrofitService.getRandomFact().execute().body()!!
+            fact = getNumberFactUseCase.execute(number)
         }
         exec.shutdown() // wait until code is executed because fact may be null
         exec.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS)
@@ -62,7 +67,7 @@ class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
      * */
     private fun insertNumber(number: Number){
         viewModelScope.launch {
-            numberDao.insert(number)
+            insertNumberUseCase.execute(number)
         }
     }
 }
