@@ -5,6 +5,7 @@ import com.example.numberproject.data.local.entity.Number
 import com.example.numberproject.data.local.NumberDao
 import com.example.numberproject.data.remote.NumberApi
 import com.example.numberproject.data.repository.NumberRepositoryImpl
+import com.example.numberproject.domain.usecases.CreateNumberUseCase
 import com.example.numberproject.domain.usecases.GetAllNumbersUseCase
 import com.example.numberproject.domain.usecases.GetNumberFactUseCase
 import com.example.numberproject.domain.usecases.InsertNumberUseCase
@@ -21,7 +22,7 @@ class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
     private val getNumberFactUseCase : GetNumberFactUseCase by lazy { GetNumberFactUseCase(numberRepositoryImpl)}
     private val insertNumberUseCase : InsertNumberUseCase by lazy { InsertNumberUseCase(numberRepositoryImpl)}
     private val getAllNumberUseCase : GetAllNumbersUseCase by lazy { GetAllNumbersUseCase(numberRepositoryImpl)}
-
+    private val createNumberUseCase : CreateNumberUseCase by lazy { CreateNumberUseCase() }
     val allNumbers : LiveData<List<Number>> = getAllNumberUseCase.execute()
 
 
@@ -32,14 +33,7 @@ class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
      * */
     fun getFact(number : BigInteger?) : String
     {
-        var fact:String = ""
-        val exec : ExecutorService = Executors.newSingleThreadExecutor() // create new thread to not run in main thread
-        exec.execute{
-            fact = getNumberFactUseCase.execute(number)
-        }
-        exec.shutdown() // wait until code is executed because fact may be null
-        exec.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS)
-        return fact
+        return getNumberFactUseCase.execute(number)
     }
     /**
      * @param num BigInteger number
@@ -47,10 +41,7 @@ class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
      * */
     fun createNumber(num : BigInteger?) : Number {
         val fact = getFact(num) // get fact according to entered number
-        if(num == null) // in case user wanted to get random number
-            // 1st word of the fact contains number that is returned
-             return Number(0,number = fact.split(" ")[0].toBigInteger(), fact = fact)
-        return Number(0, number = num, fact = fact) // in case user wanted to get random number
+        return createNumberUseCase.execute(num, fact)
     }
 
     /**
