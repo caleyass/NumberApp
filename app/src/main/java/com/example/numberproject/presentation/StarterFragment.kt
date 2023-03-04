@@ -1,4 +1,4 @@
-package com.example.numberproject.ui
+package com.example.numberproject.presentation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,15 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.numberproject.NumberApplication
 import com.example.numberproject.R
-import com.example.numberproject.adapter.NumberListAdapter
-import com.example.numberproject.data.Number
 import com.example.numberproject.databinding.FragmentStarterBinding
-import com.example.numberproject.viewmodel.NumbersViewModel
-import com.example.numberproject.viewmodel.NumbersViewModelFactory
+import com.example.numberproject.presentation.adapter.NumberListAdapter
+import com.example.numberproject.presentation.viewmodel.NumbersViewModel
+import com.example.numberproject.presentation.viewmodel.NumbersViewModelFactory
 
 
 class StarterFragment : Fragment(R.layout.fragment_starter) {
@@ -27,13 +25,6 @@ class StarterFragment : Fragment(R.layout.fragment_starter) {
         NumbersViewModelFactory(
             (activity?.application as NumberApplication).database.numberDao()
         )
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        /*if(savedInstanceState != null)
-            binding?.enteredNumber?.editText?.setText(savedInstanceState?.getString("enteredTest"))
-*/
     }
 
     override fun onCreateView(

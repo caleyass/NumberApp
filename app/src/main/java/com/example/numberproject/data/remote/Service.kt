@@ -1,4 +1,4 @@
-package com.example.numberproject.network
+package com.example.numberproject.data.remote
 
 import retrofit2.Call
 import retrofit2.Retrofit

@@ -1,4 +1,4 @@
-package com.example.numberproject.ui
+package com.example.numberproject.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import com.example.numberproject.NumberApplication
-import com.example.numberproject.data.Number
+import com.example.numberproject.data.local.entity.Number
 import com.example.numberproject.databinding.FragmentNumberFactBinding
-import com.example.numberproject.databinding.FragmentStarterBinding
-import com.example.numberproject.viewmodel.NumbersViewModel
-import com.example.numberproject.viewmodel.NumbersViewModelFactory
+import com.example.numberproject.presentation.viewmodel.NumbersViewModel
+import com.example.numberproject.presentation.viewmodel.NumbersViewModelFactory
 import java.math.BigInteger
 
 class NumberFactFragment : Fragment() {
@@ -28,9 +27,6 @@ class NumberFactFragment : Fragment() {
     }
     lateinit var number : Number
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

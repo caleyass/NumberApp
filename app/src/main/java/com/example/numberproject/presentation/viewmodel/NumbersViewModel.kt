@@ -1,25 +1,17 @@
-package com.example.numberproject.viewmodel
+package com.example.numberproject.presentation.viewmodel
 
 import androidx.lifecycle.*
-import com.example.numberproject.data.Number
-import com.example.numberproject.data.NumberDao
-import com.example.numberproject.network.NumberApi
-import kotlinx.coroutines.async
+import com.example.numberproject.data.local.entity.Number
+import com.example.numberproject.data.local.NumberDao
+import com.example.numberproject.data.remote.NumberApi
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Response
 import java.lang.IllegalArgumentException
 import java.math.BigInteger
-import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
-
-    /*private var _number = MutableLiveData<Number>()
-    val number : LiveData<Number>
-        get() = _number*/
 
 
     val allNumbers : LiveData<List<Number>> = numberDao.getNumbers().asLiveData()
@@ -48,7 +40,7 @@ class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
      * @param num BigInteger number
      * @return Number object with entered number and fact about it
      * */
-    fun createNumber(num : BigInteger?) : Number{
+    fun createNumber(num : BigInteger?) : Number {
         val fact = getFact(num) // get fact according to entered number
         if(num == null) // in case user wanted to get random number
             // 1st word of the fact contains number that is returned

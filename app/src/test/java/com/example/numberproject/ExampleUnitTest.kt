@@ -1,12 +1,5 @@
 package com.example.numberproject
 
-import android.util.Log
-import com.example.numberproject.ui.NumberFactFragment
-import com.example.numberproject.viewmodel.NumbersViewModel
-import org.junit.Test
-
-import org.junit.Assert.*
-
 /**
  * Example local unit test, which will execute on the development machine (host).
  *

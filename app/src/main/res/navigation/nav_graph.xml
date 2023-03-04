@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/starterFragment"
-        android:name="com.example.numberproject.ui.StarterFragment"
+        android:name="com.example.numberproject.presentation.StarterFragment"
         android:label="StarterFragment" >
         <action
             android:id="@+id/action_starterFragment_to_numberFactFragment"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/numberFactFragment"
-        android:name="com.example.numberproject.ui.NumberFactFragment"
+        android:name="com.example.numberproject.presentation.NumberFactFragment"
         android:label="NumberFactFragment" >
         <argument
             android:name="number"

@@ -1,18 +1,11 @@
-package com.example.numberproject.data
+package com.example.numberproject.data.local
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.room.*
-import kotlinx.coroutines.flow.Flow
-
-@Dao
-interface NumberDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(number: Number)
-
-    @Query("SELECT id, number, fact from number ORDER BY id DESC")
-    fun getNumbers() : Flow<List<Number>>
-}
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.numberproject.data.local.entity.Number
 
 @Database(entities = [Number::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)

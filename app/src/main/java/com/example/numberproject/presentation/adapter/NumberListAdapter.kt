@@ -1,11 +1,11 @@
-package com.example.numberproject.adapter
+package com.example.numberproject.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.numberproject.data.Number
+import com.example.numberproject.data.local.entity.Number
 import com.example.numberproject.databinding.NumberListItemBinding
 
 class NumberListAdapter()

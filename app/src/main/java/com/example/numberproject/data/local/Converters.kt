@@ -1,4 +1,4 @@
-package com.example.numberproject.data
+package com.example.numberproject.data.local
 
 import androidx.room.TypeConverter
 import java.math.BigInteger
