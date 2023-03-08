@@ -8,6 +8,6 @@ import java.math.BigInteger
 data class Number (
     @PrimaryKey(autoGenerate = true)
     val id : Int = 0,
-    val number : BigInteger,
+    val number : Long,
     val fact : String?,
 )

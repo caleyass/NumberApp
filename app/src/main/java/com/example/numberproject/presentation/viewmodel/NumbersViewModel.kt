@@ -31,7 +31,7 @@ class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
      * @return fact about entered number
      * Get fact about number
      * */
-    fun getFact(number : BigInteger?) : String
+    fun getFact(number : Long?) : String
     {
         return getNumberFactUseCase.execute(number)
     }
@@ -39,7 +39,7 @@ class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
      * @param num BigInteger number
      * @return Number object with entered number and fact about it
      * */
-    fun createNumber(num : BigInteger?) : Number {
+    fun createNumber(num : Long?) : Number {
         val fact = getFact(num) // get fact according to entered number
         return createNumberUseCase.execute(num, fact)
     }

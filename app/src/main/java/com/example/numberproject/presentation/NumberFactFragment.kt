@@ -48,7 +48,7 @@ class NumberFactFragment : Fragment() {
      * Creates Number object according to entered number
      * */
     private fun createNumber(){
-        var num : BigInteger? = navigationArgs.number?.toBigInteger() // num that was entered
+        var num : Long? = navigationArgs.number?.toLong() // num that was entered
         number = viewModel.createNumber(num) // create Number object according to entered number
     }
 

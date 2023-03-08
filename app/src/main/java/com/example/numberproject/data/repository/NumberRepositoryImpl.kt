@@ -10,7 +10,7 @@ import java.math.BigInteger
 
 class NumberRepositoryImpl(private val api:NumberApiService, private val dao : NumberDao) :
     NumberRepository {
-    override fun getFact(number: BigInteger): Call<String> {
+    override fun getFact(number: Long): Call<String> {
         return api.getFact(number)
     }
 

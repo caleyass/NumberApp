@@ -11,7 +11,7 @@ private const val BASE_URL = "http://numbersapi.com"
 
 interface NumberApiService {
     @GET("{number}")
-    fun getFact(@Path("number") number: BigInteger): Call<String>
+    fun getFact(@Path("number") number: Long): Call<String>
 
     @GET("random/math")
     fun getRandomFact() : Call<String>

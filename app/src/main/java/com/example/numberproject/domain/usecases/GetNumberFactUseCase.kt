@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 
 class GetNumberFactUseCase(private val numberRepository: NumberRepository)  {
 
-    fun execute (number: BigInteger?): String {
+    fun execute (number: Long?): String {
         var fact:String = ""
         val exec : ExecutorService = Executors.newSingleThreadExecutor() // create new thread to not run in main thread
         exec.execute{

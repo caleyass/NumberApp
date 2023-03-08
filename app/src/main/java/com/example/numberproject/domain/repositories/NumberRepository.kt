@@ -6,7 +6,7 @@ import retrofit2.Call
 import java.math.BigInteger
 
 interface NumberRepository {
-    fun getFact(number: BigInteger): Call<String>
+    fun getFact(number: Long): Call<String>
     fun getRandomFact():Call<String>
     fun getNumbers() : Flow<List<Number>>
     suspend fun insertNumber(number: Number)
