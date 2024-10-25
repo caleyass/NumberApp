@@ -16,17 +16,14 @@ import java.math.BigInteger
 
 class NumberFactFragment : Fragment() {
 
-    private val navigationArgs : NumberFactFragmentArgs by navArgs()
-
+    private val navigationArgs: NumberFactFragmentArgs by navArgs()
     private var _binding: FragmentNumberFactBinding? = null
     private val binding get() = _binding!!
-    private val viewModel : NumbersViewModel by activityViewModels {
+    private val viewModel: NumbersViewModel by activityViewModels {
         NumbersViewModelFactory(
             (activity?.application as NumberApplication).database.numberDao()
         )
     }
-    lateinit var number : Number
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,31 +36,39 @@ class NumberFactFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        createNumber()
-        insertNumber()
-        bind(number)
+
+        // Get the entered number from the navigation arguments
+        val num: Long? = navigationArgs.number?.toLong()
+
+        // Trigger creation of Number object based on the provided number
+        if (num != null) {
+            viewModel.createNumber(num)
+        }
+
+        // Observe the LiveData in the ViewModel
+        viewModel.number.observe(viewLifecycleOwner) { number ->
+            // Bind the data to the UI when number is updated
+            bind(number)
+        }
     }
 
     /**
-     * Creates Number object according to entered number
-     * */
-    private fun createNumber(){
-        var num : Long? = navigationArgs.number?.toLong() // num that was entered
-        number = viewModel.createNumber(num) // create Number object according to entered number
+     * Inserts the Number object into the database
+     */
+    private fun insertNumber(number: Number) {
+        viewModel.addNumber(number)
     }
 
     /**
-     * Inserts Number object into database
-     * */
-    private fun insertNumber() = viewModel.addNumber(number)
-
-
-    /**
-     * @param number number that was entered in StarterFragment
-     * Binds views according to entered number
-     * */
-    fun bind(number: Number){
+     * Binds the views according to the entered Number data
+     */
+    private fun bind(number: Number) {
         binding.number.text = number.number.toString()
-        binding.numberFact.text = number.fact.toString()
+        binding.numberFact.text = number.fact
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // Prevent memory leaks
     }
 }

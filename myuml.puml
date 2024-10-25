@@ -1,0 +1,143 @@
+@startuml
+class com.example.numberproject.domain.usecases.CreateNumberUseCase {
++ Number execute(Long?,String)
+}
+
+class com.example.numberproject.presentation.MainActivity {
+- NavController navController
++ void onCreate(Bundle?)
++ Boolean onSupportNavigateUp()
+}
+
+
+class com.example.numberproject.presentation.adapter.NumberListAdapter$NumberViewHolder {
++ void bind(Number)
+}
+
+class com.example.numberproject.presentation.adapter.NumberListAdapter$Companion {
+-  DiffCallback
+}
+
+class com.example.numberproject.presentation.adapter.NumberListAdapter {
++ NumberViewHolder onCreateViewHolder(ViewGroup,Int)
++ void onBindViewHolder(NumberViewHolder,Int)
+}
+
+class com.example.numberproject.data.local.NumberDatabase$Companion {
+- NumberDatabase? INSTANCE
++ NumberDatabase getDatabase(Context)
+}
+
+
+abstract class com.example.numberproject.data.local.NumberDatabase {
++ NumberDao numberDao()
+}
+
+class com.example.numberproject.data.local.entity.Number {
+}
+class com.example.numberproject.domain.usecases.InsertNumberUseCase {
++ void execute(Number)
+}
+
+class com.example.numberproject.presentation.viewmodel.NumbersViewModel {
+- NumberRepositoryImpl numberRepositoryImpl
+- GetNumberFactUseCase getNumberFactUseCase
+- InsertNumberUseCase insertNumberUseCase
+- GetAllNumbersUseCase getAllNumberUseCase
+- CreateNumberUseCase createNumberUseCase
++ LiveData<List<Number>> allNumbers
++ String getFact(Long?)
++ Number createNumber(Long?)
++ void addNumber(Number)
+- void insertNumber(Number)
+}
+
+
+class com.example.numberproject.presentation.viewmodel.NumbersViewModelFactory {
++ T create(Class<T>)
+}
+
+class com.example.numberproject.presentation.StarterFragment {
+- FragmentStarterBinding? _binding
+-  binding
+- NumbersViewModel viewModel
++ View? onCreateView(LayoutInflater,ViewGroup?,Bundle?)
++ void onViewCreated(View,Bundle?)
+- void setButtons()
+- void setRandomFactButton()
+- void setFactButton()
+- Boolean numberIsEntered(String)
+}
+
+
+class com.example.numberproject.domain.usecases.GetNumberFactUseCase {
++ String execute(Long?)
+}
+
+interface com.example.numberproject.data.local.NumberDao {
++ void insert(Number)
++ Flow<List<Number>> getNumbers()
+}
+
+interface com.example.numberproject.domain.repositories.NumberRepository {
++ Call<String> getFact(Long)
++ Call<String> getRandomFact()
++ Flow<List<Number>> getNumbers()
++ void insertNumber(Number)
+}
+
+class com.example.numberproject.NumberApplication {
++ NumberDatabase database
+}
+
+class com.example.numberproject.domain.usecases.GetAllNumbersUseCase {
++ LiveData<List<Number>> execute()
+}
+
+class com.example.numberproject.data.repository.NumberRepositoryImpl {
++ Call<String> getFact(Long)
++ Call<String> getRandomFact()
++ Flow<List<Number>> getNumbers()
++ void insertNumber(Number)
+}
+
+class com.example.numberproject.presentation.NumberFactFragment {
+- NumberFactFragmentArgs navigationArgs
+- FragmentNumberFactBinding? _binding
+-  binding
+- NumbersViewModel viewModel
++ Number number
++ View? onCreateView(LayoutInflater,ViewGroup?,Bundle?)
++ void onViewCreated(View,Bundle?)
+- void createNumber()
+- void insertNumber()
++ void bind(Number)
+}
+
+
+interface com.example.numberproject.data.remote.NumberApiService {
++ Call<String> getFact(Long)
++ Call<String> getRandomFact()
+}
+
+class com.example.numberproject.data.remote.NumberApi {
+-  retrofit
++ NumberApiService retrofitService
+}
+
+
+
+androidx.appcompat.app.AppCompatActivity <|-- com.example.numberproject.presentation.MainActivity
+com.example.numberproject.presentation.adapter.NumberListAdapter +.. com.example.numberproject.presentation.adapter.NumberListAdapter$NumberViewHolder
+com.example.numberproject.presentation.adapter.ViewHolder <|-- com.example.numberproject.presentation.adapter.NumberListAdapter$NumberViewHolder
+com.example.numberproject.presentation.adapter.NumberListAdapter +.. com.example.numberproject.presentation.adapter.NumberListAdapter$Companion
+androidx.recyclerview.widget.ListAdapter <|-- com.example.numberproject.presentation.adapter.NumberListAdapter
+com.example.numberproject.data.local.NumberDatabase +.. com.example.numberproject.data.local.NumberDatabase$Companion
+androidx.room.RoomDatabase <|-- com.example.numberproject.data.local.NumberDatabase
+com.example.numberproject.presentation.viewmodel.ViewModel <|-- com.example.numberproject.presentation.viewmodel.NumbersViewModel
+com.example.numberproject.presentation.viewmodel.Factory <|.. com.example.numberproject.presentation.viewmodel.NumbersViewModelFactory
+androidx.fragment.app.Fragment <|-- com.example.numberproject.presentation.StarterFragment
+android.app.Application <|-- com.example.numberproject.NumberApplication
+com.example.numberproject.domain.repositories.NumberRepository <|.. com.example.numberproject.data.repository.NumberRepositoryImpl
+androidx.fragment.app.Fragment <|-- com.example.numberproject.presentation.NumberFactFragment
+@enduml

@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NumberProject"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31">
+        android:enableOnBackInvokedCallback="true"
+        >
+
         <activity
             android:name="com.example.numberproject.presentation.MainActivity"
             android:exported="true">

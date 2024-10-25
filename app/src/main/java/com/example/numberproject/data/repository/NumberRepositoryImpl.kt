@@ -6,16 +6,18 @@ import com.example.numberproject.data.remote.NumberApiService
 import com.example.numberproject.domain.repositories.NumberRepository
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
-import java.math.BigInteger
 
 class NumberRepositoryImpl(private val api:NumberApiService, private val dao : NumberDao) :
     NumberRepository {
-    override fun getFact(number: Long): Call<String> {
-        return api.getFact(number)
+
+    override suspend fun getFact(number: Long): String? {
+        val response = api.getFact(number)
+        return if (response.isSuccessful) response.body() else null
     }
 
-    override fun getRandomFact(): Call<String> {
-        return api.getRandomFact()
+    override suspend fun getRandomFact(): String? {
+        val response = api.getRandomFact()
+        return if (response.isSuccessful) response.body() else null
     }
 
     override fun getNumbers(): Flow<List<Number>> {
