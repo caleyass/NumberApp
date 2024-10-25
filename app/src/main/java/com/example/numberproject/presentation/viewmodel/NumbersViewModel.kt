@@ -38,18 +38,23 @@ class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
      * @return Number object with entered number and fact about it
      * */
     fun createNumber(num: Long?) {
+
+        val number : Long = num ?: (1..100).random().toLong()
         viewModelScope.launch {
             Log.d("TAG", "createNumber started")
             // Fetch the fact asynchronously
-            val fact = async { getNumberFactUseCase.execute(num) }.await()
+            val fact = async { getNumberFactUseCase.execute(number) }.await()
             Log.d("TAG", "createNumber fact: $fact")
             // Use the fact to create the Number object
-            val numberObject = createNumberUseCase.execute(num, fact)
+            val numberObject = createNumberUseCase.execute(number, fact)
+            addNumber(numberObject)
 
             _number.value = numberObject
             // Update LiveData or perform other actions with the created Number object
             _fact.value = fact
         }
+
+
     }
 
 

@@ -41,9 +41,8 @@ class NumberFactFragment : Fragment() {
         val num: Long? = navigationArgs.number?.toLong()
 
         // Trigger creation of Number object based on the provided number
-        if (num != null) {
-            viewModel.createNumber(num)
-        }
+        viewModel.createNumber(num)
+
 
         // Observe the LiveData in the ViewModel
         viewModel.number.observe(viewLifecycleOwner) { number ->
@@ -55,9 +54,9 @@ class NumberFactFragment : Fragment() {
     /**
      * Inserts the Number object into the database
      */
-    private fun insertNumber(number: Number) {
-        viewModel.addNumber(number)
-    }
+//    private fun insertNumber(number: Number) {
+//        viewModel.addNumber(number)
+//    }
 
     /**
      * Binds the views according to the entered Number data
