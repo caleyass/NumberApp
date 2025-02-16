@@ -54,7 +54,6 @@ class NumbersViewModel(private val numberDao : NumberDao) : ViewModel() {
             _fact.value = fact
         }
 
-
     }
 
 

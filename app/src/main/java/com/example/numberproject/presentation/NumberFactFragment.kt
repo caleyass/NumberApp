@@ -52,13 +52,6 @@ class NumberFactFragment : Fragment() {
     }
 
     /**
-     * Inserts the Number object into the database
-     */
-//    private fun insertNumber(number: Number) {
-//        viewModel.addNumber(number)
-//    }
-
-    /**
      * Binds the views according to the entered Number data
      */
     private fun bind(number: Number) {
